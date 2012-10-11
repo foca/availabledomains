@@ -4,7 +4,15 @@ require "whois"
 class AvailableDomains < Sinatra::Application
   get "/" do
     @results = query_glob(params[:e])
+    pass
+  end
+
+  get "/", provides: "html" do
     erb :home
+  end
+
+  get "/", provides: "txt" do
+    @results.join("\n") << "\n"
   end
 
   # Check multiple domains for availability.
