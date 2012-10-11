@@ -3,7 +3,7 @@ require "whois"
 
 helpers do
   def expand(expression)
-    expression ? `echo #{expression}`.scan(/\S+/) : []
+    Array(expression && `bash -c 'echo #{expression}'`.scan(/\S+/))
   end
 end
 
