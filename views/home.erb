@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Search domains</title>
+</head>
+<body>
+  <h1>Find available domains</h1>
+  <form method="get" action="/">
+    <label for="e">Glob expression</label>
+    <input type="text" name="e" id="e" value="<%= params[:e] %>">
+  </form>
+  <% if params[:e] %>
+    <% if @results.any? %>
+      <h2>Available</h2>
+      <ul>
+        <% @results.each do |result| %>
+          <li><%= Rack::Utils.escape result %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>No available domains found :(</p>
+    <% end %>
+  <% end %>
+</body>
+</html>
