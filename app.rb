@@ -3,12 +3,12 @@ require "whois"
 
 helpers do
   def expand(expression)
-    Array(expression && `bash -c 'echo #{expression}'`.scan(/\S+/))
+    expression.empty? ? [] : `bash -c 'echo #{expression}'`.scan(/\S+/)
   end
 end
 
 get "/" do
-  expression = URI.decode(params[:e])
+  expression = URI.decode(params[:e].to_s)
   @results = expand(expression).select { |domain| Whois.available?(domain) }
   erb :home
 end
