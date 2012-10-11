@@ -9,3 +9,7 @@ group :development do
   gem "racksh"
   gem "debugger"
 end
+
+group :production do
+  gem "unicorn"
+end
