@@ -8,6 +8,7 @@ helpers do
 end
 
 get "/" do
-  @results = expand(params[:e]).select { |domain| Whois.available?(domain) }
+  expression = URI.decode(params[:e])
+  @results = expand(expression).select { |domain| Whois.available?(domain) }
   erb :home
 end
