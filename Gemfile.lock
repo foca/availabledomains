@@ -3,6 +3,7 @@ GEM
   specs:
     addressable (2.3.2)
     columnize (0.3.6)
+    dalli (1.1.2)
     debugger (1.2.0)
       columnize (>= 0.3.1)
       debugger-linecache (~> 1.1.1)
@@ -22,6 +23,7 @@ GEM
     kgio (2.7.4)
     launchy (2.1.2)
       addressable (~> 2.3)
+    memcachier (0.0.1)
     mime-types (1.19)
     netrc (0.7.7)
     rack (1.4.1)
@@ -53,8 +55,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  dalli
   debugger
   heroku
+  memcachier
   racksh
   shotgun
   sinatra
