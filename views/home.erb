@@ -3,12 +3,16 @@
 <head>
   <meta charset="utf-8">
   <title>Search domains</title>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+  <div class="span8 offset2">
   <h1>Find available domains</h1>
-  <form method="get" action="/">
-    <label for="e">Glob expression</label>
-    <input type="text" name="e" id="e" value="<%= params[:e] %>">
+  <form method="get" action="/" class="form-inline">
+    <div class="input-append">
+      <input class="input-xxlarge" type="text" name="e" id="e" value="<%= params[:e] %>" placeholder="Type a shell glob expression…"
+      ><button type="submit" class="btn btn-primary">Find them!</button>
+    </div>
   </form>
   <% if params[:e] %>
     <% if @results.any? %>
@@ -22,5 +26,6 @@
       <p>No available domains found :(</p>
     <% end %>
   <% end %>
+</div>
 </body>
 </html>
