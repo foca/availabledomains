@@ -1,7 +1,14 @@
 require "sinatra"
 require "whois"
+require "dalli"
 
 class AvailableDomains < Sinatra::Application
+  configure :production do
+    require "memcachier"
+  end
+
+  set :cache, Dalli::Client.new
+
   get "/" do
     @results = query_glob(params[:e])
     pass
@@ -23,6 +30,20 @@ class AvailableDomains < Sinatra::Application
   def query_glob(expression)
     expression = URI.decode(expression.to_s)
     domains = expression.empty? ? [] : `bash -c 'echo #{expression}'`.scan(/\S+/)
-    domains.select { |domain| Whois.available?(domain) }
+    domains.select { |domain| available?(domain) }
+  end
+
+  # Check if a domain is available. The result is cached.
+  #
+  # domain - A String with a domain name.
+  #
+  # Returns true|false.
+  def available?(domain)
+    res = self.class.cache.get(domain)
+    if res.nil?
+      res = Whois.available?(domain)
+      self.class.cache.set(domain, res, 60 * 60 * 24) # one day
+    end
+    res
   end
 end
